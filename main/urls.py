@@ -23,6 +23,8 @@ urlpatterns = [
     path('master_organisasi/edit/<int:idedit>', views.editOrganisasi, name='editData'),
 
     path('master_tahun/', views.tahun, name='tahun'),
+    path('master_tahun/Off/<int:idedit>', views.Off, name='Off'),
+    path('master_tahun/on/<int:idedit>', views.On, name='on'),
     path('master_tahun/tambah/', views.addTahun, name='tambah'),
     path('master_tahun/hapus/<int:idedit>', views.hapusTahun, name='hapus'),
     path('master_tahun/edit/<int:idedit>', views.editTahun, name='editData'),
