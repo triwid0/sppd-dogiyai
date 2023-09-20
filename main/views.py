@@ -14,6 +14,26 @@ from django.contrib.auth.hashers import make_password
 def login(request):
     return render(request, 'auth/login.html')
 
+def loginUser(request):
+
+    if request.method == 'GET':
+        contex = {
+            'title' : 'Login'
+        }   
+        return render(request, 'auth/login.html', contex)
+    if request.method == 'POST':
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            auth_login(request, user)
+            return redirect('SPPD:dash')
+        else:
+            return redirect('SPPD:login')
+
+
 def dash(request):
     return render(request, 'dashboard/index.html')
 
@@ -205,11 +225,9 @@ def tahun(request):
 def addTahun(request):
     if request.method == "POST":
         tahun = request.POST.get('tahun')
-        status = request.POST.get('status')
 
         insert = MasterTahun()
         insert.tahun = tahun
-        insert.status = status
 
         insert.save()
 
@@ -218,9 +236,8 @@ def addTahun(request):
 def editTahun(request, idedit=""):
     if request.method == "POST":
         tahun = request.POST['thnEdit']
-        status = request.POST['statusEdit']
 
-        MasterTahun.objects.filter(id=idedit).update(tahun = tahun, status = status)
+        MasterTahun.objects.filter(id=idedit).update(tahun = tahun)
 
         return redirect('SPPD:tahun')
 
@@ -230,25 +247,17 @@ def hapusTahun(request, idedit):
     hapus.delete()
     return redirect('SPPD:tahun')
 
-def loginUser(request):
+def Off(request, idedit=""):
+  
+    MasterTahun.objects.filter(id=idedit).update(status = 0)
 
-    if request.method == 'GET':
-        contex = {
-            'title' : 'Login'
-        }   
-        return render(request, 'auth/login.html', contex)
-    if request.method == 'POST':
+    return redirect('SPPD:tahun')
 
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
+def On(request, idedit=""):
+  
+    MasterTahun.objects.filter(id=idedit).update(status = 1)
 
-        if user is not None:
-            auth_login(request, user)
-            return redirect('SPPD:dash')
-        else:
-            return redirect('SPPD:login')
-
+    return redirect('SPPD:tahun')
 
 def addUser(request):
     contex = {
