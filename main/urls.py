@@ -21,6 +21,12 @@ urlpatterns = [
     path('master_organisasi/tambah/', views.addOrganisasi, name='tambah'),
     path('master_organisasi/hapus/<int:idedit>', views.hapusOrganisasi, name='hapus'),
     path('master_organisasi/edit/<int:idedit>', views.editOrganisasi, name='editData'),
+    # master Pegawai
+    path('master_pegawai/', views.pegawai, name='pegawai'),
+    path('master_pegawai/tambah/', views.addPegawai, name='tambah'),
+    path('master_pegawai/hapus/<int:idedit>', views.hapusPegawai, name='hapus'),
+    path('master_pegawai/edit/<int:idedit>', views.editPegawai, name='editData'),
+
 
     path('master_tahun/', views.tahun, name='tahun'),
     path('master_tahun/tambah/', views.addTahun, name='tambah'),
@@ -35,7 +41,6 @@ urlpatterns = [
     path('sppd/', views.sppd, name='sppd'),
     path('master_jabatan/', views.jabatan, name='jabatan'),
     path('master_kegiatan/', views.kegiatan, name='kegiatan'),
-    path('master_pegawai/', views.pegawai, name='pegawai'),
     path('master_pengesah/', views.pengesah, name='pengesah'),
     path('master_ssh/', views.ssh, name='ssh'),
     

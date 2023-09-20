@@ -3,6 +3,7 @@ from .models import UserNew
 from .models import MasterJabatan
 from .models import MasterLokasi
 from .models import MasterOrganisasi
+from .models import MasterPegawai
 from .models import MasterTahun
 
 from django.contrib.auth import authenticate
@@ -135,7 +136,58 @@ def hapusOrganisasi(request, idedit):
 
 
 def pegawai(request):
-    return render(request, 'master/master_pegawai.html')
+   pegawai = MasterPegawai.objects.all().order_by('nip').values()
+   contex = {
+        'pegawai' : pegawai
+    }
+   
+   return render(request, 'master/master_pegawai.html',contex)
+
+def addPegawai(request):
+    if request.method == "POST":
+        nip = request.POST.get('nip')
+        nama = request.POST.get('nama')
+        golongan = request.POST.get('golongan')
+        no_hp = request.POST.get('nohp')
+        eselon = request.POST.get('eselon')
+        alamat = request.POST.get('alamat')
+        pangkat = request.POST.get('pangkat')
+        email = request.POST.get('email')
+        
+        insert = MasterPegawai()
+        insert.nip = nip
+        insert.nama = nama
+        insert.golongan = golongan
+        insert.no_hp = no_hp
+        insert.eselon = eselon
+        insert.alamat = alamat
+        insert.pangkat = pangkat
+        insert.email = email
+
+        insert.save()
+
+        return redirect('SPPD:pegawai')
+    
+def editPegawai(request, idedit=""):
+    if request.method == "POST":
+        nip = request.POST.get('nip')
+        nama = request.POST.get('nama')
+        golongan = request.POST.get('golongan')
+        no_hp = request.POST.get('nohp')
+        eselon = request.POST.get('eselon')
+        alamat = request.POST.get('alamat')
+        pangkat = request.POST.get('pangkat')
+        email = request.POST.get('email')
+
+        MasterPegawai.objects.filter(nip=idedit).update(nip = nip, nama = nama, golongan = golongan, no_hp = no_hp, eselon = eselon, alamat = alamat, pangkat = pangkat, email = email)
+
+        return redirect('SPPD:pegawai')
+    
+def hapusPegawai(request, idedit):
+    hapus = MasterPegawai.objects.get(nip=idedit)
+
+    hapus.delete()
+    return redirect('SPPD:pegawai')
 
 def pengesah(request):
     return render(request, 'master/master_pengesah.html')

@@ -28,20 +28,21 @@ class MasterLokasi(models.Model):
     urai = models.TextField(max_length=225)
 
 class MasterPegawai(models.Model):
-    nip = models.PositiveIntegerField(primary_key=True)
+    nip = models.CharField(max_length=225)
     nama = models.CharField(max_length=225)
     golongan = models.CharField(max_length=225)
     no_hp = models.CharField(max_length=225)
     eselon = models.CharField(max_length=225)
     alamat = models.CharField(max_length=225)
-    pangakat = models.TextField(max_length=225)
+    pangkat = models.TextField(max_length=225)
     email = models.TextField(max_length=225)
 
 class MasterPengesah(models.Model):
     no_rek = models.TextField(max_length=225)
     nama_bank = models.TextField(max_length=225)
     status = models.BooleanField(max_length=1, default=False)
-    jabatan = models.ForeignKey(MasterPegawai, on_delete=models.RESTRICT)
+    jabatan = models.ForeignKey(MasterJabatan, on_delete=models.RESTRICT)
+    idPeg = models.ForeignKey(MasterPegawai, on_delete=models.RESTRICT)
 
 class MasterKegiatan(models.Model):
     kd_bidang = models.TextField(max_length=225)
